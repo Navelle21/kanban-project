@@ -1,34 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
+import { RecoilRoot } from 'recoil'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import SideMenuLayout from './layouts/SideMenuLayout'
+import TaskSummary from './features/tasks/components/TaskSummary'
 
-function App() {
-  const [count, setCount] = useState(0)
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <SideMenuLayout />,
+    children:[
+      {
+        path: '/',
+        element: <TaskSummary />,
+      },
+      {
+        path: 'task-list',
+        element: (
+          <div>
+            <h1>Task List</h1>
+          </div>
+        ),
+      },
+      {
+        path: 'progress-management',
+        element: (
+          <div>
+            <h1>Task Progress</h1>
+          </div>
+        ),
+      },
+    ]
+  }
+])
+
+function App(): JSX.Element {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    // Apit dengan RecoilRoot
+    <RecoilRoot>
+      <RouterProvider router={router} />
+    </RecoilRoot>
   )
 }
 
